@@ -23,8 +23,40 @@ app.use((req,res,next)=>{
 })
 
 // routes
+
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html');
+});
+
+/**
+ * POST with form data 'username' to create a new user.
+*/
+app.post('/api/users', (req, res) => {
+  res.json({});
+});
+
+/**
+ * GET to /api/users to get a list of all users.
+ */
+app.get('/api/users', (req, res) => {
+  res.json({});
+});
+
+/**
+ * GET to /api/users/:_id/logs to retrieve a full exercise 
+ * log of any user.
+ */
+app.get('/api/users/:_id/logs', (req, res) => {
+  res.json({});
+});
+
+/**
+ * POST to /api/users/:_id/exercises with form 
+ * data 'description', 'duration', and optionally 'date'. 
+ * If no date is supplied, the current date will be used.
+ */
+app.post('/api/users/:_id/exercises', (req, res) => {
+  res.json({});
 });
 
 const listener = app.listen(process.env.PORT || 3000, () => {
