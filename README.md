@@ -9,6 +9,7 @@ A Nodejs full stack application that tracks exercise behavior.
 1. **GET**: `/api/users`
 2. **GET**: `/api/users/:_id/logs`
 3. **POST**: `/api/users`
+4. **POST**: `/api/users/:_id/exercises`
 
 ## Examples
 TBD
