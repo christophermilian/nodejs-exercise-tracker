@@ -2,7 +2,7 @@
 
 ## Description
 
-A Node.js timestamp microservice that returns a unix and utc timestamp.
+A Nodejs full stack application that tracks exercise behavior.
 
 ## Available Endpoints
 
