@@ -74,8 +74,23 @@ app.post('/api/users', (req, res, next) => {
 /**
  * GET to /api/users to get a list of all users.
  */
-app.get('/api/users', (req, res) => {
-  res.json({ message: 'not implemented' });
+app.get('/api/users', (req, res, next) => {
+  // in case of incorrect function use wait timeout then respond
+  let t = setTimeout(() => {
+    next({ message: 'timeout' });
+  }, TIMEOUT);
+
+  exercise.findAllUsers((err, data)=>{
+    clearTimeout(t);
+    if (err) {
+      return next(err);
+    }
+    if (!data) {
+      console.log('Missing `done()` argument');
+      return next({ message: 'Missing callback argument' });
+    }
+    res.json(data);
+  })
   /**
    * Example response structure:
    * {
@@ -91,7 +106,7 @@ app.get('/api/users', (req, res) => {
  * i.e. /api/users/6567ae62840e130013a1fefd/logs?
  */
 app.get('/api/users/:_id/logs', (req, res) => {
-  res.json({ message: 'not implemented' });
+  res.status(501).json({ message: 'not implemented' });
   /**
    * Example response structure:
    * {
@@ -113,7 +128,7 @@ app.get('/api/users/:_id/logs', (req, res) => {
  * If no date is supplied, the current date will be used.
  */
 app.post('/api/users/:_id/exercises', (req, res) => {
-  res.json({ message: 'not implemented' });
+  res.status(501).json({ message: 'not implemented' });
   /*
    * Example response structure
    * {

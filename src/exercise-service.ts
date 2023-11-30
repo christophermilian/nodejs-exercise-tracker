@@ -10,7 +10,7 @@ mongoose.connect(process.env.MONGO_URI, {
 let UserDoc = mongoose.model('User', userSchema);
 
 /**
- *
+ * Creates and saves a user.
  * @param input The username to create for the user
  * @param done Callback function to complete request
  * @returns A UserDoc document
@@ -35,4 +35,16 @@ export const createAndSaveUser = async (input, done) => {
     console.error(error);
     return done(error);
   }
+};
+
+/**
+ * Finds all users.
+ * @param done Callbacl function to complete request
+ * @returns An array of UserDoc documents
+ */
+export const findAllUsers = async (done: Function): Promise<Array<Object>> => {
+  const result: Array<Object> = await UserDoc.find((err) => {
+    if(err) return done(err)
+  })
+  return done(null, result)
 };
