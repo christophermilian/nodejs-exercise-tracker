@@ -1,4 +1,4 @@
-import {connect, model} from 'mongoose';
+import { connect, model } from 'mongoose';
 import { userSchema } from './database/userSchema';
 require('dotenv').config();
 
