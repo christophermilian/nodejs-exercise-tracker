@@ -31,11 +31,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run format && git add -A"
     }
-  },
-  "lint-staged": {
-    "*": "npm run format && git add -A"
   },
   "repository": {
     "type": "git",

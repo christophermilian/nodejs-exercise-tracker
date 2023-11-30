@@ -4,7 +4,7 @@ import cors from 'cors';
 import { AddressInfo } from 'net';
 import * as bodyParser from 'body-parser';
 import * as exercise from './exercise-service';
-import { config } from 'dotenv'
+import { config } from 'dotenv';
 
 const app = express();
 config();
@@ -26,7 +26,7 @@ const TIMEOUT = 10000;
 /**
  * Middleware function to log request information
  */
-app.use((req: Request, res: Response , next) => {
+app.use((req: Request, res: Response, next) => {
   console.log(`${req.method} ${req.path} -${req.ip}`);
   next();
 });
@@ -82,7 +82,7 @@ app.get('/api/users', (req: Request, res: Response, next) => {
     next({ message: 'timeout' });
   }, TIMEOUT);
 
-  exercise.findAllUsers((err, data)=>{
+  exercise.findAllUsers((err, data) => {
     clearTimeout(t);
     if (err) {
       return next(err);
@@ -92,7 +92,7 @@ app.get('/api/users', (req: Request, res: Response, next) => {
       return next({ message: 'Missing callback argument' });
     }
     res.json(data);
-  })
+  });
   /**
    * Example response structure:
    * {

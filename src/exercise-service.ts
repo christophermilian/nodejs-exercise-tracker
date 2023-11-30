@@ -15,7 +15,10 @@ let UserDoc = model('User', userSchema);
  * @param done Callback function to complete request
  * @returns A UserDoc document
  */
-export const createAndSaveUser = async (input: string, done: Function): Promise<Object> => {
+export const createAndSaveUser = async (
+  input: string,
+  done: Function,
+): Promise<Object> => {
   const userEntity = {
     username: input,
   };
@@ -44,7 +47,7 @@ export const createAndSaveUser = async (input: string, done: Function): Promise<
  */
 export const findAllUsers = async (done: Function): Promise<Array<Object>> => {
   const result: Array<Object> = await UserDoc.find((err) => {
-    if(err) return done(err)
-  })
-  return done(null, result)
+    if (err) return done(err);
+  });
+  return done(null, result);
 };
