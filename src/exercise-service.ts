@@ -1,13 +1,13 @@
-import * as mongoose from 'mongoose';
+import {connect, model} from 'mongoose';
 import { userSchema } from './database/userSchema';
 require('dotenv').config();
 
-mongoose.connect(process.env.MONGO_URI, {
+connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-let UserDoc = mongoose.model('User', userSchema);
+let UserDoc = model('User', userSchema);
 
 /**
  * Creates and saves a user.
@@ -15,14 +15,14 @@ let UserDoc = mongoose.model('User', userSchema);
  * @param done Callback function to complete request
  * @returns A UserDoc document
  */
-export const createAndSaveUser = async (input, done) => {
+export const createAndSaveUser = async (input: string, done: Function): Promise<Object> => {
   const userEntity = {
     username: input,
   };
 
   const newUser = new UserDoc(userEntity);
   try {
-    const result = await UserDoc.findOne({ username: input });
+    const result: Object = await UserDoc.findOne({ username: input });
     if (result) {
       throw new Error(`User already exists for username ${input}`);
     }

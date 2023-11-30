@@ -1,11 +1,13 @@
-import * as express from 'express';
-import * as cors from 'cors';
+import { Request, Response } from 'express';
+import express from 'express';
+import cors from 'cors';
 import { AddressInfo } from 'net';
 import * as bodyParser from 'body-parser';
 import * as exercise from './exercise-service';
-require('dotenv').config();
+import { config } from 'dotenv'
 
 const app = express();
+config();
 
 // server configurations
 
@@ -24,7 +26,7 @@ const TIMEOUT = 10000;
 /**
  * Middleware function to log request information
  */
-app.use((req, res, next) => {
+app.use((req: Request, res: Response , next) => {
   console.log(`${req.method} ${req.path} -${req.ip}`);
   next();
 });
@@ -38,7 +40,7 @@ app.get('/', (req, res) => {
 /**
  * POST with form data 'username' to create a new user.
  */
-app.post('/api/users', (req, res, next) => {
+app.post('/api/users', (req: Request, res: Response, next) => {
   const { username } = req.body;
 
   // in case of incorrect function use wait timeout then respond
@@ -74,7 +76,7 @@ app.post('/api/users', (req, res, next) => {
 /**
  * GET to /api/users to get a list of all users.
  */
-app.get('/api/users', (req, res, next) => {
+app.get('/api/users', (req: Request, res: Response, next) => {
   // in case of incorrect function use wait timeout then respond
   let t = setTimeout(() => {
     next({ message: 'timeout' });
@@ -105,7 +107,7 @@ app.get('/api/users', (req, res, next) => {
  * log of any user.
  * i.e. /api/users/6567ae62840e130013a1fefd/logs?
  */
-app.get('/api/users/:_id/logs', (req, res) => {
+app.get('/api/users/:_id/logs', (req: Request, res: Response, next) => {
   res.status(501).json({ message: 'not implemented' });
   /**
    * Example response structure:
@@ -127,7 +129,7 @@ app.get('/api/users/:_id/logs', (req, res) => {
  * data 'description', 'duration', and optionally 'date'.
  * If no date is supplied, the current date will be used.
  */
-app.post('/api/users/:_id/exercises', (req, res) => {
+app.post('/api/users/:_id/exercises', (req: Request, res: Response, next) => {
   res.status(501).json({ message: 'not implemented' });
   /*
    * Example response structure
