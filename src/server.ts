@@ -110,11 +110,17 @@ app.get('/api/users', (req: Request, res: Response, next) => {
 app.get('/api/users/:_id/logs', (req: Request, res: Response, next) => {
   const userId = req.params._id;
 
+  const filters = {
+    from: req.query.from ? (req.query.from as string) : null,
+    to: req.query.to ? (req.query.to as string) : null,
+    limit: req.query.limit ? parseInt(req.query.limit[0]) : 0,
+  };
+
   let t = setTimeout(() => {
     next({ message: 'timeout' });
   }, TIMEOUT);
 
-  exercise.getUserExerciseLogs(userId, (err, data) => {
+  exercise.getUserExerciseLogs(userId, filters, (err, data) => {
     clearTimeout(t);
     if (err) {
       return next(err);

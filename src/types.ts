@@ -11,3 +11,9 @@ export type Logs = {
   _id: string;
   log: object[];
 };
+
+export type LogsOptions = {
+  from?: string;
+  to?: string;
+  limit: number;
+};

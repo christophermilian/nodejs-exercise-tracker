@@ -1,7 +1,8 @@
 import { connect, model } from 'mongoose';
 import { userSchema, UserInterface } from './database/userSchema';
-import { ExerciseInput, Logs } from './types';
+import { ExerciseInput, Logs, LogsOptions } from './types';
 import { exerciseSchema, ExerciseInterface } from './database/exerciseSchema';
+import { format } from 'date-fns';
 require('dotenv').config();
 
 connect(process.env.MONGO_URI, {
@@ -104,18 +105,27 @@ export const createAndSaveExercise = async (
  */
 export const getUserExerciseLogs = async (
   input: string,
+  options: LogsOptions,
   done: Function,
 ): Promise<Logs> => {
   try {
     const userId = input;
-    const user = await User.findById(userId);
+    const filterFrom = options.from
+      ? options.from
+      : format(new Date(0), 'yyyy-MM-dd');
 
+    const filter =
+      options.to == null
+        ? { date: { $gt: filterFrom } }
+        : { date: { $gt: filterFrom, $lt: options.to } };
+
+    const user = await User.findById(userId);
     if (!user) {
       throw new Error(`User does not exists for id ${userId}`);
     }
-    const exercises = await Exercise.find((err) => {
+    const exercises = await Exercise.find(filter, (err) => {
       if (err) return done(err);
-    });
+    }).limit(options.limit);
 
     const response = {
       username: user.username,
