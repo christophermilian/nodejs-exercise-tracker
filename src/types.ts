@@ -4,3 +4,10 @@ export type ExerciseInput = {
   duration: number;
   dateString: string;
 };
+
+export type Logs = {
+  username: string;
+  count: number;
+  _id: string;
+  log: object[];
+};

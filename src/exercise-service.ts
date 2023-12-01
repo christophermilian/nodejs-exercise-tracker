@@ -1,6 +1,6 @@
 import { connect, model } from 'mongoose';
 import { userSchema, UserInterface } from './database/userSchema';
-import { ExerciseInput } from './types';
+import { ExerciseInput, Logs } from './types';
 import { exerciseSchema, ExerciseInterface } from './database/exerciseSchema';
 require('dotenv').config();
 
@@ -88,8 +88,48 @@ export const createAndSaveExercise = async (
         duration: data.duration,
         date: new Date(data.date).toDateString(),
       };
-      done(null, response);
+      return done(null, response);
     });
+  } catch (error) {
+    console.error(error);
+    return done(error);
+  }
+};
+
+/**
+ *
+ * @param input The user id
+ * @param done Callback function to complete request
+ * @returns The user info with their exercise logs
+ */
+export const getUserExerciseLogs = async (
+  input: string,
+  done: Function,
+): Promise<Logs> => {
+  try {
+    const userId = input;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error(`User does not exists for id ${userId}`);
+    }
+    const exercises = await Exercise.find((err) => {
+      if (err) return done(err);
+    });
+
+    const response = {
+      username: user.username,
+      count: exercises.length,
+      _id: user._id,
+      log: exercises.map((exercise) => {
+        return {
+          description: exercise.description,
+          duration: exercise.duration,
+          date: new Date(exercise.date).toDateString(),
+        };
+      }),
+    };
+    return done(null, response);
   } catch (error) {
     console.error(error);
     return done(error);
