@@ -130,7 +130,31 @@ app.get('/api/users/:_id/logs', (req: Request, res: Response, next) => {
  * If no date is supplied, the current date will be used.
  */
 app.post('/api/users/:_id/exercises', (req: Request, res: Response, next) => {
-  res.status(501).json({ message: 'not implemented' });
+  console.log('Dobbie is posting an exercise');
+  const userId = req.params._id;
+  const exerciseInput = {
+    userId: userId,
+    description: req.body.description,
+    duration: req.body.duration,
+    dateString: req.body.date ? req.body.date : new Date().toDateString(),
+  };
+
+  let t = setTimeout(() => {
+    next({ message: 'timeout' });
+  }, TIMEOUT);
+
+  exercise.createAndSaveExercise(exerciseInput, (err, data) => {
+    clearTimeout(t);
+    if (err) {
+      return next(err);
+    }
+    if (!data) {
+      console.log('Missing `done()` argument');
+      return next({ message: 'Missing callback argument' });
+    }
+    res.json(data);
+  });
+
   /*
    * Example response structure
    * {

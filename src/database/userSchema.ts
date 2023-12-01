@@ -1,6 +1,10 @@
-import * as mongoose from 'mongoose';
+import { Document, Schema } from 'mongoose';
 
-export const userSchema = new mongoose.Schema({
+export interface UserInterface extends Document {
+  username: string;
+}
+
+export const userSchema = new Schema<UserInterface>({
   username: {
     type: String,
     required: true,
