@@ -1,6 +1,6 @@
 {
   "name": "nodejs-exercise-tracker",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "description": "A full stack application that tracks exercise behavior.",
   "main": "server.ts",
   "scripts": {

@@ -108,12 +108,14 @@ app.get('/api/users', (req: Request, res: Response, next) => {
  * i.e. /api/users/6567ae62840e130013a1fefd/logs?
  */
 app.get('/api/users/:_id/logs', (req: Request, res: Response, next) => {
-  const userId = req.params._id;
+  const userId = (
+    req.params._id == '_id' ? req.query['_id'] : req.params._id
+  ) as string;
 
   const filters = {
     from: req.query.from ? (req.query.from as string) : null,
     to: req.query.to ? (req.query.to as string) : null,
-    limit: req.query.limit ? parseInt(req.query.limit[0]) : 0,
+    limit: req.query.limit ? parseInt(req.query.limit as string) : 0,
   };
 
   let t = setTimeout(() => {

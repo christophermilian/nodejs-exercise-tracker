@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>Exercise Tracker | freeCodeCamp</title>
-    <link rel="shortcut icon" href="https://cdn.freecodecamp.org/universal/favicons/favicon.ico"  type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" />
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
@@ -16,6 +15,15 @@
         <input id="uname" type="text" name="username" placeholder="username" />
         <input type="submit" value="Submit" />
       </form>
+      <form action="/api/users/_id/logs" id="logs-form" method="get">
+        <h3>Get User Logs</h3>
+        <p><code>GET /api/users/:_id/logs</code></p>
+        <input id="uid" type="text" name="_id" placeholder="_id" />
+        <input id="from" type="text" name="from" placeholder="from" />
+        <input id="to" type="text" name="to" placeholder="to" />
+        <input id="limit" type="text" name="limit" placeholder="limit" />
+        <button type="button" onclick="getExerciseUser()">Submit</button>
+      </form>
       <form action="/api/users/:_id/exercises" id="exercise-form" method="post">
         <h3>Add exercises</h3>
         <p><code>POST /api/users/:_id/exercises</code></p>
@@ -23,7 +31,7 @@
         <input id="desc" type="text" name="description" placeholder="description*" />
         <input id="dur" type="text" name="duration" placeholder="duration* (mins.)" />
         <input id="date" type="text" name="date" placeholder="date (yyyy-mm-dd)" />
-        <input type="submit" value="Submit" />
+        <button type="button" onclick="createExerciseUser()">Submit</button>
       </form>
       <p>
         <strong>GET user's exercise log: </strong>
@@ -31,16 +39,32 @@
       </p>
       <p><strong>[ ]</strong> = optional</p>
       <p><strong>from, to</strong> = dates (yyyy-mm-dd); <strong>limit</strong> = number</p>
+      <br>
+      <h3>Created with Node.js, TypeScript, Express, and MongoDB.</h3>
     </div>
     <script>
       const exerciseForm = document.getElementById("exercise-form");
+      const logsForm = document.getElementById("logs-form");
 
-      exerciseForm.addEventListener("submit", () => {
+      function createExerciseUser(){
         const userId = document.getElementById("uid").value;
         exerciseForm.action = `/api/users/${userId}/exercises`;
 
         exerciseForm.submit();
-      });
+      }
+
+      function getExerciseUser(){
+        const userId = document.getElementById("uid").value;
+        exerciseForm.action = `/api/users/${userId}/logs`;
+        logsForm.submit();
+      }
+
+
     </script>
+    <div class="footer">
+      <p>
+        By <a href="https://www.linkedin.com/in/christophermilian/">Christopher Milian</a>
+      </p>
+    </div>
   </body>
 </html>
