@@ -77,7 +77,7 @@ export const createAndSaveExercise = async (
       user_id: userId,
       description: description,
       duration: duration,
-      date: dateString,
+      date: new Date(dateString),
     };
     const newExercise = new Exercise(exerciseEntity);
     newExercise.save((err, data) => {

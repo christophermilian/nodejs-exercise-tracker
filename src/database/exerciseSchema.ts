@@ -21,7 +21,8 @@ export const exerciseSchema = new Schema<ExerciseInterface>({
     required: true,
   },
   date: {
-    type: String,
+    type: Date,
     required: true,
+    default: Date.now,
   },
 });
